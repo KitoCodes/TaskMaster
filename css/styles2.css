@@ -1,0 +1,871 @@
+:root {
+    /* Light theme */
+    --bg-primary-light: #ffffff;
+    --bg-secondary-light: #f8f9fa;
+    --text-primary-light: #2c3e50;
+    --text-secondary-light: #6c757d;
+    --border-light: #e9ecef;
+    --shadow-light: 0 2px 12px rgba(0, 0, 0, 0.08);
+    
+    /* Dark theme */
+    --bg-primary-dark: #1a1b1e;
+    --bg-secondary-dark: #2c2e33;
+    --text-primary-dark: #e9ecef;
+    --text-secondary-dark: #adb5bd;
+    --border-dark: #373a40;
+    --shadow-dark: 0 2px 12px rgba(0, 0, 0, 0.3);
+
+    /* Default theme (light) */
+    --bg-primary: var(--bg-primary-light);
+    --bg-secondary: var(--bg-secondary-light);
+    --text-primary: var(--text-primary-light);
+    --text-secondary: var(--text-secondary-light);
+    --border: var(--border-light);
+    --shadow: var(--shadow-light);
+}
+
+[data-theme="dark"] {
+    --bg-primary: var(--bg-primary-dark);
+    --bg-secondary: var(--bg-secondary-dark);
+    --text-primary: var(--text-primary-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --border: var(--border-dark);
+    --shadow: var(--shadow-dark);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    background: var(--bg-primary);
+    min-height: 100vh;
+    color: var(--text-primary);
+    transition: background-color 0.3s, color 0.3s;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-primary) 35%,
+        var(--bg-secondary) 65%,
+        var(--bg-primary) 100%
+    );
+    opacity: 0.6;
+    z-index: -1;
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    filter: blur(100px);
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+}
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: var(--bg-primary);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+h1 {
+    color: var(--text-primary);
+    font-size: 2rem;
+}
+
+.category-controls {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+#addCategoryBtn, #categoryFilter {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.task-input-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+input, button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+input {
+    flex: 1;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+button {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    border: none;
+    cursor: pointer;
+}
+
+.task-item {
+    background: var(--bg-primary);
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    animation: slideIn 0.3s ease-out forwards;
+    opacity: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.task-item:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+.task-content {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.task-text {
+    flex: 1;
+}
+
+.task-category {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    white-space: nowrap;
+    transition: all 0.2s ease-out;
+    animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    70% {
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.task-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.task-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 0;
+    position: relative;
+    appearance: none;
+    background: var(--bg-secondary);
+    border: 2px solid var(--text-secondary);
+    transition: all 0.2s ease-out;
+}
+
+.task-checkbox:checked {
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+.task-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid var(--bg-primary);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    animation: checkmarkDraw 0.3s ease-out forwards;
+}
+
+@keyframes checkmarkDraw {
+    0% {
+        opacity: 0;
+        stroke-dashoffset: 22;
+    }
+    100% {
+        opacity: 1;
+        stroke-dashoffset: 0;
+    }
+}
+
+.delete-btn {
+    background: transparent;
+    color: var(--text-secondary);
+    padding: 0.4rem;
+    opacity: 0.7;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-out;
+}
+
+.delete-btn:hover {
+    opacity: 1;
+    color: #ff6b6b;
+}
+
+.delete-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.completed .task-text {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+    transition: all 0.3s ease-out;
+}
+
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+footer a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+footer a:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+    .container {
+        margin: 1rem;
+    }
+}
+
+/* Add styles for the delete confirmation dialog */
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100; /* Higher than categories overlay */
+}
+
+.dialog {
+    background: var(--bg-primary);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: var(--shadow);
+    transform: scale(0.95);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.dialog h2, .dialog h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.dialog p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.dialog input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.dialog-buttons button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    min-width: 100px;
+    transition: all 0.2s ease;
+}
+
+.dialog-buttons button:first-child {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.dialog-buttons button:first-child:hover {
+    background: var(--border);
+}
+
+.dialog-buttons button:last-child {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+}
+
+.dialog-buttons button:last-child:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.dialog.visible {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Update the delete category button style */
+.category-item .delete-category {
+    opacity: 0;
+    transition: opacity 0.2s;
+    padding: 0.4rem;
+    border-radius: 4px;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add staggered animation delay for tasks */
+.tasks-container .task-item:nth-child(1) { animation-delay: 0.1s; }
+.tasks-container .task-item:nth-child(2) { animation-delay: 0.15s; }
+.tasks-container .task-item:nth-child(3) { animation-delay: 0.2s; }
+.tasks-container .task-item:nth-child(4) { animation-delay: 0.25s; }
+.tasks-container .task-item:nth-child(5) { animation-delay: 0.3s; }
+.tasks-container .task-item:nth-child(n+6) { animation-delay: 0.35s; }
+
+/* Smooth transitions for all interactive elements */
+.task-item, button, input, select, .task-checkbox {
+    transition: all 0.2s ease-out;
+}
+
+/* Smooth completion animation */
+.task-item.completed .task-text {
+    transition: all 0.3s ease-out;
+}
+
+/* Dialog animation */
+.dialog-overlay {
+    transition: opacity 0.3s ease-out;
+    opacity: 0;
+}
+
+.dialog-overlay.visible {
+    opacity: 1;
+}
+
+.dialog {
+    transform: translateY(20px);
+    transition: transform 0.3s ease-out;
+}
+
+.dialog-overlay.visible .dialog {
+    transform: translateY(0);
+    animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Category pill transition */
+.task-category {
+    transition: all 0.2s ease-out;
+}
+
+/* Delete button hover effect */
+.delete-btn {
+    transition: all 0.2s ease-out;
+}
+
+/* Checkbox custom style with animation */
+.task-checkbox {
+    position: relative;
+    appearance: none;
+    background: var(--bg-secondary);
+    border: 2px solid var(--text-secondary);
+    transition: all 0.2s ease-out;
+}
+
+.task-checkbox:checked {
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+.task-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid var(--bg-primary);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    animation: checkmarkDraw 0.3s ease-out forwards;
+}
+
+@keyframes checkmarkDraw {
+    0% {
+        opacity: 0;
+        stroke-dashoffset: 22;
+    }
+    100% {
+        opacity: 1;
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Task complete animation */
+.task-item.completed {
+    animation: completeTask 0.4s ease-out forwards;
+}
+
+@keyframes completeTask {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.98);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Task delete animation */
+.task-item.deleting {
+    animation: deleteTask 0.3s ease-out forwards;
+}
+
+@keyframes deleteTask {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8) translateX(-30px);
+    }
+}
+
+/* Add task button animation */
+#addTaskBtn:active {
+    animation: pressEffect 0.2s ease-out;
+}
+
+@keyframes pressEffect {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Update category dropdown styling */
+#categoryFilter {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    position: relative;
+    min-width: 150px;
+}
+
+/* Style for the delete button that appears on hover */
+.category-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.category-option .delete-btn {
+    position: absolute;
+    right: 8px;
+    opacity: 0;
+    background: transparent;
+    padding: 2px;
+    transition: opacity 0.2s;
+}
+
+.category-option:hover .delete-btn {
+    opacity: 1;
+}
+
+.category-option .delete-btn:hover {
+    color: #ff6b6b;
+}
+
+/* Don't show delete button for system categories */
+.category-option.system .delete-btn {
+    display: none;
+}
+
+/* Custom dropdown arrow */
+.category-select-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.category-select-wrapper::after {
+    content: '▼';
+    font-size: 0.8em;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+    transition: transform 0.2s ease;
+}
+
+#categoryFilter:focus + .category-select-wrapper::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Dropdown options styling */
+#categoryFilter option {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding: 0.8rem;
+}
+
+/* Completed tasks styling */
+.task-item.completed {
+    opacity: 0.8;
+    background: var(--bg-secondary);
+}
+
+.completed .task-category {
+    background: var(--text-secondary);
+    color: var(--bg-primary);
+}
+
+/* Add styles for category dropdown items */
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.category-item:hover {
+    background: var(--bg-secondary);
+}
+
+.category-item.system {
+    font-weight: 500;
+}
+
+.category-item .delete-category {
+    opacity: 0;
+    transition: opacity 0.2s;
+    padding: 0.2rem;
+    border-radius: 4px;
+    color: var(--text-secondary);
+}
+
+.category-item:hover .delete-category {
+    opacity: 1;
+}
+
+.category-item .delete-category:hover {
+    color: #ff6b6b;
+}
+
+/* Dropdown animation */
+.category-select-wrapper select {
+    transition: transform 0.2s;
+}
+
+.category-select-wrapper select:focus {
+    transform: scale(1.02);
+}
+
+/* Category deletion animation */
+.category-item.deleting {
+    animation: slideOut 0.3s ease-out forwards;
+}
+
+@keyframes slideOut {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+}
+
+/* Categories overlay styles */
+.categories-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.categories-overlay.visible {
+    opacity: 1;
+}
+
+.categories-modal {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 300px;
+    box-shadow: var(--shadow);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.categories-overlay.visible .categories-modal {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.categories-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.categories-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.close-modal {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.2rem;
+}
+
+.categories-list {
+    max-height: 50vh;
+    overflow-y: auto;
+    margin-right: 2px;
+    padding-right: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-secondary) var(--bg-secondary);
+}
+
+.categories-list::-webkit-scrollbar {
+    width: 8px;
+    background: var(--bg-secondary);
+}
+
+.categories-list::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 4px;
+}
+
+.categories-list::-webkit-scrollbar-thumb {
+    background-color: var(--text-secondary);
+    border-radius: 4px;
+    border: 2px solid var(--bg-secondary);
+}
+
+.categories-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-primary);
+}
+
+.category-item {
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.category-item:hover {
+    background: var(--bg-secondary);
+}
+
+.category-item.selected {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.category-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0.5rem 0;
+}
+
+.add-category-btn {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-top: 1px solid var(--border);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-category-btn:hover {
+    background: var(--bg-secondary);
+}
+
+/* Update the categories button style */
+#showCategoriesBtn {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#showCategoriesBtn:hover {
+    background: var(--bg-secondary);
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster - Open Source Todo List</title>
+    <link rel="stylesheet" href="styles2.css">
+    <link rel="manifest" href="manifest.json">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- License Notice -->
+    <meta name="license" content="CC BY-NC 4.0">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TaskMaster</h1>
+            <button class="theme-toggle" id="themeToggle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+            </button>
+        </header>
+
+        <div class="category-controls">
+            <button id="showCategoriesBtn">Categories ▾</button>
+        </div>
+
+        <div class="task-input-container">
+            <input type="text" id="taskInput" placeholder="Add a new task...">
+            <button id="addTaskBtn">Add</button>
+        </div>
+
+        <div class="tasks-container">
+            <!-- Tasks will be added here dynamically -->
+        </div>
+
+        <footer>
+            <p>© 2024 TaskMaster - Licensed under CC BY-NC 4.0</p>
+            <p>Made with ❤️ by <a href="https://github.com/KitoCodes" target="_blank">KitoCodes</a></p>
+        </footer>
+    </div>
+
+    <!-- Audio elements for sound effects -->
+    <audio id="checkSound" src="sounds/check.mp3"></audio>
+    <audio id="deleteSound" src="sounds/delete.mp3"></audio>
+
+    <div class="categories-overlay" id="categoriesOverlay">
+        <div class="categories-modal">
+            <div class="categories-header">
+                <h3>Categories</h3>
+                <button class="close-modal">×</button>
+            </div>
+            <div class="categories-list">
+                <div class="category-item system">All Tasks</div>
+                <div class="category-item system">Active</div>
+                <div class="category-item system">Completed</div>
+                <div class="category-divider"></div>
+                <!-- Dynamic categories will be added here -->
+            </div>
+            <button id="addCategoryBtn" class="add-category-btn">+ New Category</button>
+        </div>
+    </div>
+
+    <div class="dialog-overlay" id="categoryDialog">
+        <div class="dialog">
+            <h2>New Category</h2>
+            <input type="text" id="categoryInput" placeholder="Enter category name">
+            <div class="dialog-buttons">
+                <button id="cancelCategory">Cancel</button>
+                <button id="confirmCategory">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="dialog-overlay" id="deleteDialog">
+        <div class="dialog">
+            <h3>Delete Category</h3>
+            <p>Are you sure you want to delete this category?</p>
+            <div class="dialog-buttons">
+                <button id="cancelDelete">Cancel</button>
+                <button id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script2.js"></script>
+</body>
+</html>
