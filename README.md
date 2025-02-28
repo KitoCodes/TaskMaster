@@ -7,7 +7,6 @@ A modern, fast, and elegant task management web application.
 - 🎯 Category management
 - 🌓 Dark/Light theme
 - 💾 Local storage
-- 🎵 Sound effects
 - 📱 Responsive design
 
 ## Demo
