@@ -16,7 +16,8 @@ A modern, fast, and elegant task management web application.
 ## Installation
 1. Clone the repository
 
-2. 
+enter this in powershell 👇
+
 bash
 git clone https://github.com/KitoCodes/TaskMaster.git
 
